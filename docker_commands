@@ -26,3 +26,6 @@ docker logs -f techtrends
 03/06/2021 02:52:02 PM 172.17.0.1 - - [06/Mar/2021 14:52:02] "GET /healtz HTTP/1.1" 404 -
 03/06/2021 02:52:10 PM Status request successfull
 03/06/2021 02:52:10 PM 172.17.0.1 - - [06/Mar/2021 14:52:10] "GET /healthz HTTP/1.1" 200 -
+03/08/2021 07:21:42 AM A new article is created with title UDACITY is Awesome
+03/08/2021 07:21:42 AM 172.17.0.1 - - [08/Mar/2021 07:21:42] "POST /create HTTP/1.1" 302 -
+03/08/2021 07:21:42 AM 172.17.0.1 - - [08/Mar/2021 07:21:42] "GET / HTTP/1.1" 200 -
