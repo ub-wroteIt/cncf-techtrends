@@ -29,7 +29,7 @@ spec:
             memory: "128Mi"
             cpu: "500m"
         ports:
-        - containerPort: 6112
+        - containerPort: 3111
           protocol: TCP
         livenessProbe:
           httpGet:
