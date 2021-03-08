@@ -1,5 +1,5 @@
 import sqlite3
-
+import sys
 from flask import Flask, jsonify, json, render_template, request, url_for, redirect, flash
 from werkzeug.exceptions import abort
 import logging
@@ -9,6 +9,7 @@ import logging
 def get_db_connection():
     connection = sqlite3.connect('database.db')
     connection.row_factory = sqlite3.Row
+    app.config['connection_counter']+=1
     return connection
 
 # Function to get a post using its ID
@@ -88,7 +89,7 @@ def status():
 @app.route("/metrics")
 def metrics():
     total_no_of_posts = get_total_posts()
-    connection_counter = 0
+    connection_counter = app.config['connection_counter']
     response = app.response_class(
         response = json.dumps({"db_connection_count": connection_counter, "post_count": total_no_of_posts['count']}),
         status = 200,
@@ -99,5 +100,12 @@ def metrics():
     return response 
 # start the application on port 3111
 if __name__ == "__main__":
-   logging.basicConfig(level= logging.DEBUG, format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
+    # set logger to handle STDOUT and STDERR
+   stdout_handler =  logging.StreamHandler(sys.stdout)# stdout handler 
+   stderr_handler =  logging.StreamHandler(sys.stderr)# stderr handler 
+   handlers = [stderr_handler, stdout_handler]
+   # format output
+   app.config['connection_counter']=0
+   format_output = '%(asctime)s %(message)s'# formating output here
+   logging.basicConfig(level= logging.DEBUG, format=format_output, datefmt='%m/%d/%Y %I:%M:%S %p',handlers=handlers)
    app.run(host='0.0.0.0', port='3111')
